@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encrypt Decrypt</title>
+    <style>
+      *, *:before, *:after {
+        box-sizing: inherit;
+      }
+      body {
+        color: #222;
+        font-family: Helvetica;
+        box-sizing: border-box;
+      }
+      .container {
+        display: flex;
+      }
+      .block {
+        flex: 1;
+        padding: 30px;
+      }
+      .input-container {
+        margin-bottom: 18px;
+      }
+      .input-container label {
+        display: block;
+        margin-bottom: 5px;
+      }
+      .input-container input {
+        padding: 5px;
+        border: 1px solid #aaa;
+        border-radius: 4px;
+        display: block;
+        width: 100%;
+      }
+      button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin: 30px 0px;
+      }
+    </style>
+</head>
+<body>
+    <div class="container">
+      <div class="block">
+        <h3>Encrypt</h3>
+        <form action="javascript:encrypt();">
+          <div class="input-container">
+            <label for="encrypt-string">String to encrypt</label>
+            <input id="encrypt-string" type="text" required>
+          </div>
+          <div class="input-container">
+            <label for="encrypt-password">Password</label>
+            <input id="encrypt-password" type="password" required>
+          </div>
+          <button type="submit">Encrypt</button>
+          <div class="input-container">
+            <label for="encrypt-result">Result</label>
+            <input id="encrypt-result" type="text">
+          </div>
+        </form>
+      </div>
+
+      <div class="block">
+        <h3>Decrypt</h3>
+        <form action="javascript:decrypt();">
+          <div class="input-container">
+            <label for="decrypt-string">String to decrypt</label>
+            <input id="decrypt-string" type="text">
+          </div>
+          <div class="input-container">
+            <label for="decrypt-password">Password</label>
+            <input id="decrypt-password" type="password">
+          </div>
+          <button type="submit">Decrypt</button>
+          <div class="input-container">
+            <label for="decrypt-result">Result</label>
+            <input id="decrypt-result" type="text">
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <script type="javascript">    
+      let encrypt = () => {
+        const encryptString = document.getElementById('encrypt-string').value
+        const encryptPassword = document.getElementById('encrypt-password').value
+        const encryptedAES = CryptoJS.AES.encrypt(encryptString, encryptPassword);
+        document.getElementById('encrypt-result').value = encryptedAES
+      }
+
+      let decrypt = () => {
+        const decryptString = document.getElementById('decrypt-string').value
+        const decryptPassword = document.getElementById('decrypt-password').value
+        const decryptedAES = CryptoJS.AES.decrypt(decryptString, decryptPassword).toString(CryptoJS.enc.Utf8);
+        if(decryptedAES && decryptedAES !== null && decryptedAES !== "") {
+          document.getElementById('decrypt-result').value = decryptedAES;
+        } else {
+          document.getElementById('decrypt-result').value = 'ERROR!';
+        }
+      }
+    </script>
+</body>
+</html>
